@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SimpleDataStore
+namespace DotStash
 {
     /// <remarks>
     /// This is just a basic 1:1 wrapper around Dictionary for now

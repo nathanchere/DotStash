@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleDataStore", "SimpleDataStore\SimpleDataStore.csproj", "{835A8A1C-A35D-4E1C-9FC5-92E83E99B3B4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotStash", "SimpleDataStore\DotStash.csproj", "{835A8A1C-A35D-4E1C-9FC5-92E83E99B3B4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc", "Misc", "{0BE2365B-65D8-40B3-86AE-65DA41EAC79A}"
 	ProjectSection(SolutionItems) = preProject
@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc", "Misc", "{0BE2365B-6
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleDataStore.Example", "SimpleDataStore.Example\SimpleDataStore.Example.csproj", "{E5D80940-C7D1-45B4-AA28-2F7F8DD36B69}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotStash.Example", "SimpleDataStore.Example\DotStash.Example.csproj", "{E5D80940-C7D1-45B4-AA28-2F7F8DD36B69}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,9 +1,10 @@
-SimpleDataStore
+DotStash
 ==========
+
+An extremely simple data store intended for rapid prototyping or extremely light-weight projects where simple data persistence is required but a full DB is overkill.
 
 [![Send me a tweet](http://nathanchere.github.io/twitter_tweet.png)](https://twitter.com/intent/tweet?screen_name=nathanchere "Send me a tweet") [![Follow me](http://nathanchere.github.io/twitter_follow.png)](https://twitter.com/intent/user?screen_name=nathanchere "Follow me")
 
-An extremely simple data store intended for rapid prototyping or extremely light-weight projects where simple data persistence is required but a full DB is overkill.
 
 Why bother? The main itches driving this project were wanting:
 
@@ -17,7 +18,7 @@ Why bother? The main itches driving this project were wanting:
 Limitations
 ----------
 
-It is NOT a full fledged database by any stretch of the imagination. It does not currently, nor is it ever likely to, support things like:
+Set your expectations low. It is NOT a full fledged database by any stretch of the imagination. It does not currently, nor is it ever likely to, support things like:
 
 * Querying
 * Relationships
@@ -27,9 +28,12 @@ It is NOT a full fledged database by any stretch of the imagination. It does not
 * Logging
 * Analytics
 
+...or any of the various other things you probably take for granted each time you interact with a database.
+
 It is not going to happen in the immediately foreseeable future but it may, depending on my needs, one day support:
 
 * Transactions
+* Configure primary key by func (i.e. complex/composite keys possible)
 * Auto-number / auto-generated IDs (only for *int* and *GUID* types)
 
 One more time just in case you missed it earlier - ***THIS IS NOT A DATABASE!***
@@ -144,3 +148,4 @@ License
 NServiceKit.Text: [view license](https://github.com/NServiceKit/NServiceKit/blob/master/LICENSE)
 
 Other than for that, the rest of this code is licensed under do-whatever-you-want license.
+Use at your own risk, no liabilities accepted blah blah blah.

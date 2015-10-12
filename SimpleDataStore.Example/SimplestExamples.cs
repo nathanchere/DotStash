@@ -1,7 +1,7 @@
 ﻿using System;
 using Xunit;
 
-namespace SimpleDataStore.Example
+namespace DotStash
 {
     public class SimplestExamples
     {
@@ -24,7 +24,7 @@ namespace SimpleDataStore.Example
             const int id = 6133;
             const string value = "norfen pls";
 
-            var db = new LocalDataStore("keyExamples");            
+            var db = new SimpleDataStore("keyExamples");            
             var input = new KeyExampleClass {Id = id, Value = value};
             db.Save(input);
 
@@ -39,7 +39,7 @@ namespace SimpleDataStore.Example
             const int registrationNumber = 171339811;
             const string value = "acualy is beef";
 
-            var db = new LocalDataStore("keyExamples");
+            var db = new SimpleDataStore("keyExamples");
             db.Configure<KeyExampleClass>("keyExample1", "RegistrationNumber");
 
             var input = new KeyExampleClass {Id = id, RegistrationNumber = registrationNumber, Value = value};
@@ -58,7 +58,7 @@ namespace SimpleDataStore.Example
             var id = Guid.NewGuid();
             const string value = "dat not candel in yuor pokit";
 
-            var db = new LocalDataStore("keyExamples");
+            var db = new SimpleDataStore("keyExamples");
 
             var input = new GuidKeyExampleClass {Id = id, Value = value};
             db.Save(input);

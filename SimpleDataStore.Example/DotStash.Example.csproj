@@ -8,8 +8,8 @@
     <ProjectGuid>{E5D80940-C7D1-45B4-AA28-2F7F8DD36B69}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SimpleDataStore.Example</RootNamespace>
-    <AssemblyName>SimpleDataStore.Example</AssemblyName>
+    <RootNamespace>DotStash</RootNamespace>
+    <AssemblyName>DotStash.Example</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
@@ -67,9 +67,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SimpleDataStore\SimpleDataStore.csproj">
+    <ProjectReference Include="..\SimpleDataStore\DotStash.csproj">
       <Project>{835A8A1C-A35D-4E1C-9FC5-92E83E99B3B4}</Project>
-      <Name>SimpleDataStore</Name>
+      <Name>DotStash</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

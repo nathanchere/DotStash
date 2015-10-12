@@ -7,8 +7,8 @@
     <ProjectGuid>{835A8A1C-A35D-4E1C-9FC5-92E83E99B3B4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SimpleDataStore</RootNamespace>
-    <AssemblyName>SimpleDataStore</AssemblyName>
+    <RootNamespace>DotStash</RootNamespace>
+    <AssemblyName>DotStash</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LocalDataStore.cs" />
+    <Compile Include="SimpleDataStore.cs" />
     <Compile Include="IDataStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TypeDictionary.cs" />

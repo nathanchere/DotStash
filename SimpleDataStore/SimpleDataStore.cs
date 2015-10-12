@@ -5,9 +5,9 @@ using System.IO;
 using System.Linq;
 using NServiceKit.Text;
 
-namespace SimpleDataStore
+namespace DotStash
 {
-    public class LocalDataStore : IDataStore
+    public class SimpleDataStore : IDataStore
     {
         // TODO: maybe config provider? Hopefully overkill.
         public class ConfigurationModel
@@ -19,12 +19,12 @@ namespace SimpleDataStore
             }
 
             private static readonly string DefaultDataPath =
-                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SimpleDataStore");
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "DotStash");
 
             public string DataStoreRootPath { get; set; } = DefaultDataPath;
 
             /// <summary>
-            /// Roughly equivalent of "Database Name" in MSSQL land
+            /// Roughly equivalent of "Database Name" in RDBMS land
             /// </summary>
             public string DataStoreName { get; set; }
 
@@ -45,7 +45,7 @@ namespace SimpleDataStore
 
         public readonly ConfigurationModel Config = new ConfigurationModel();
 
-        public LocalDataStore(string dataStoreName)
+        public SimpleDataStore(string dataStoreName)
         {
             Config.DataStoreName = dataStoreName;
         }
@@ -95,7 +95,6 @@ namespace SimpleDataStore
             var file = Directory.GetFiles(path)
                 .SingleOrDefault(x => Path.GetFileName(x) == string.Format("{0}{1}", id, Config.RecordFileExtension));
 
-            // TODO: configure to throw instead of null/default?
             if (file == null) return default(T);
             return File.ReadAllText(file).FromJson<T>();
         }
@@ -156,11 +155,6 @@ namespace SimpleDataStore
         {
             DeleteResource(Config.DataStoreRootPath, true);
         }
-
-        // TODO
-        // something like this might be nice, will see...
-        //public void Configure<T>(string folderName, Func<T, object> key)
-        // usage: db.Configure<InternalStaff>("people", p=> string.Format($"{p.FirstName}_{p.SecondName}")
 
         public void Dispose()
         {

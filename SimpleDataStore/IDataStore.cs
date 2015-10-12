@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SimpleDataStore
+namespace DotStash
 {
     public interface IDataStore : IDisposable
     {
-        IEnumerable<T> GetAll<T>();
-        T Get<T>(object key);
-        void Save<T>(T item);
-        void Delete<T>(object key);
-        
         void Configure<T>(string folderName, string keyName);
-
-        //// Maybe todo:
-        //void BackupData(string fileName);
-        //void RestoreBackup(string fileName);        
+                
+        T Get<T>(object id);
+        IEnumerable<T> GetAll<T>();
+        void Save<T>(T item);
+        void Delete<T>(object key);        
+        void DeleteFolder<T>();
+        void DeleteDataStore();        
     }
 }
