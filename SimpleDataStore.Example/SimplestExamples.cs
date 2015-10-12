@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace SimpleDataStore.Example
 {
-    public class RecordKeyExamples
+    public class SimplestExamples
     {
         private class KeyExampleClass
         {
@@ -57,22 +53,17 @@ namespace SimpleDataStore.Example
         }
 
         [Fact]
-        public void NonIntegerKey()
+        public void NonIntegerKeyNoConfiguration()
         {
-            const int id = 164;
-            const int registrationNumber = 171339811;
-            const string value = "acualy is beef";
+            var id = Guid.NewGuid();
+            const string value = "dat not candel in yuor pokit";
 
-            var db = new LocalDataStore("keyExample2");
-            db.Configure<KeyExampleClass>("keyExample1", "RegistrationNumber");
+            var db = new LocalDataStore("keyExamples");
 
-            var input = new KeyExampleClass {Id = id, RegistrationNumber = registrationNumber, Value = value};
+            var input = new GuidKeyExampleClass {Id = id, Value = value};
             db.Save(input);
 
-            var result = db.Get<KeyExampleClass>(id);
-            Assert.Null(result);
-
-            result = db.Get<KeyExampleClass>(registrationNumber);
+            var result = db.Get<GuidKeyExampleClass>(id);
             Assert.Equal(result.Value, value);
         }
 

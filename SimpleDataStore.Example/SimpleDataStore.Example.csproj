@@ -63,9 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="RecordKeys.cs" />
-    <Compile Include="Example.cs" />
-    <Compile Include="Contracts\Contact.cs" />
+    <Compile Include="SimplestExamples.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
