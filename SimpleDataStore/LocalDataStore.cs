@@ -2,26 +2,38 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NServiceKit.Text;
 
 namespace SimpleDataStore
 {
     public class LocalDataStore : IDataStore
     {
-        private readonly string DefaultDataPath =
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SimpleDataStore");
-
-        // TODO: probably move into a nested config class
         // TODO: maybe config provider? Hopefully overkill.
-        public string DataRoot => DefaultDataPath;
-        public string RecordFileExtension => ".json";
+        public class ConfigurationModel
+        {
+            private readonly string DefaultDataPath =
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SimpleDataStore");
 
+            public string DataRoot => DefaultDataPath;
+            
+            public string KeyName { get; set; } = "Id";
+
+            public string RecordFileExtension { get; set; } = ".json";
+
+            public bool UseFullNameAsFolder { get; set; }=false;
+
+        }
+
+        public readonly LocalDataStore.ConfigurationModel Config;
+
+        
         private string DataPath<T>()
         {
-            // TODO: would this be better as FullName? Configurable?
-            return Path.Combine(DataRoot, typeof (T).Name);
+            return Path.Combine(Config.DataRoot,
+                Config.UseFullNameAsFolder
+                ? typeof (T).FullName
+                : typeof (T).Name
+            );
         }
 
         private void VerifyDataPathExists(string path)
