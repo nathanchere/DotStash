@@ -46,7 +46,7 @@ namespace SimpleDataStore.Example
             var result = db.Get<KeyExampleClass>(id);
             Assert.Null(result);
 
-            db.Get<KeyExampleClass>(registrationNumber);
+            result = db.Get<KeyExampleClass>(registrationNumber);
             Assert.Equal(result.Value, value);
         }
 

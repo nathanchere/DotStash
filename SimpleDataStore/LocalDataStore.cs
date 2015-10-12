@@ -63,6 +63,12 @@ namespace SimpleDataStore
             return item.GetType().GetProperty(key).GetValue(item, null).ToString();
         }
 
+        private string GetFileName<T>(T item)
+        {
+            var id = GetKeyProperty(item);
+            return Path.Combine(DataPath<T>(), string.Format("{0}{1}", id, Config.RecordFileExtension));
+        }
+
         public IEnumerable<T> GetAll<T>()
         {
             var path = DataPath<T>();
@@ -91,10 +97,9 @@ namespace SimpleDataStore
         {
             var path = DataPath<T>();
             VerifyDataPathExists(path);
-
-            var id = GetKeyProperty(item);
+            
             var serialisedItem = item.ToJson();
-            var fileName = Path.Combine(DataPath<T>(), string.Format("{0}{1}", id, Config.RecordFileExtension));
+            var fileName = GetFileName(item);
 
             File.WriteAllText(fileName, serialisedItem);
         }
