@@ -15,10 +15,10 @@ namespace SimpleDataStore.Example
 
         public void KeyExamples()
         {
-            var db = new LocalDataStore();
-            db.Configure<Contact>("contacts", c => c.Id);
+            //var db = new LocalDataStore("keyexample");
+            //db.Configure<Contact>("contacts", "string");
 
-            var result = db.Get<Contact>(14);
+            //var result = db.Get<Contact>(14);
         }
 
         public void LoadAllRecords()

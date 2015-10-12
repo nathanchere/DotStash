@@ -22,7 +22,7 @@ namespace SimpleDataStore.Example
             const int id = 6133;
             const string value = "norfen pls";
 
-            var db = new LocalDataStore();            
+            var db = new LocalDataStore("keyExample1");            
             var input = new KeyExampleClass {Id = id, Value = value};
             db.Save(input);
 
@@ -37,8 +37,8 @@ namespace SimpleDataStore.Example
             const int registrationNumber = 171339811;
             const string value = "acualy is beef";
 
-            var db = new LocalDataStore();
-            db.Configure<KeyExampleClass>("keyExample1", c => c.RegistrationNumber);
+            var db = new LocalDataStore("keyExample2");
+            db.Configure<KeyExampleClass>("keyExample1", "RegistrationNumber");
 
             var input = new KeyExampleClass {Id = id, RegistrationNumber = registrationNumber, Value = value};
             db.Save(input);
