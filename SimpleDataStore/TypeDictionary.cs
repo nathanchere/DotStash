@@ -5,16 +5,30 @@ using System.Linq;
 
 namespace SimpleDataStore
 {
+    /// <remarks>
+    /// This is just a basic 1:1 wrapper around Dictionary for now
+    /// Placeholder for optimised implementation later on
+    /// </remarks>    
     public class TypeDictionary<TValue> : IDictionary<Type, TValue>
     {
         private readonly Dictionary<Type, TValue> _dictionary;        
         public ICollection<Type> Keys => _dictionary.Keys;
         public ICollection<TValue> Values => _dictionary.Values;
 
+        public int Count => _dictionary.Count;
+        public bool IsReadOnly => false;
+
         public TValue this[Type key]
         {
             get { return _dictionary[key]; }
             set { _dictionary[key] = value; }
+        }
+
+        public TValue SafeGet<T>()
+        {
+            TValue key;
+            TryGetValue(typeof(T), out key);
+            return key;
         }
 
         public TValue Get<T>()
@@ -50,14 +64,7 @@ namespace SimpleDataStore
         public bool Remove(KeyValuePair<Type, TValue> item)
         {
             return _dictionary.Remove(item.Key);
-        }
-
-        public int Count
-        {
-            get { return _dictionary.Count; }
-        }
-
-        public bool IsReadOnly { get; }
+        }                
 
         public IEnumerator<KeyValuePair<Type, TValue>> GetEnumerator()
         {
