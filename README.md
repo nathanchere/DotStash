@@ -11,6 +11,7 @@ Why bother? The main itches driving this project were wanting:
 * serverless
 * minimal config required. No creating databases, setting user permissions etc
 * minimal external dependencies
+* no attributes / etc imposed on persisted classes
 * data stored in a simple readable format (i.e. JSON) for ease of both
   * rapid prototyping (edit documents in any text editor); and
   * easily read and verify results in automated tests
