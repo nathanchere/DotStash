@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using NServiceKit.Text;
@@ -11,7 +12,8 @@ namespace SimpleDataStore
         // TODO: maybe config provider? Hopefully overkill.
         public class ConfigurationModel
         {
-            internal ConfigurationModel() {
+            internal ConfigurationModel()
+            {
                 TypeKeyProperties = new TypeDictionary<string>();
                 TypeFolderNames = new TypeDictionary<string>();
             }
@@ -19,7 +21,7 @@ namespace SimpleDataStore
             private static readonly string DefaultDataPath =
                 Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SimpleDataStore");
 
-            public string DataRootPath { get; set; } = DefaultDataPath;
+            public string DataStoreRootPath { get; set; } = DefaultDataPath;
 
             /// <summary>
             /// Roughly equivalent of "Database Name" in MSSQL land
@@ -30,29 +32,40 @@ namespace SimpleDataStore
 
             public string RecordFileExtension { get; set; } = ".json";
 
-            public string DefaultKeyProperty { get; set; } = "Id";     
+            public string DefaultKeyProperty { get; set; } = "Id";
+
+            /// <remarks>
+            /// Warning: this will delete any persisted data when the data store instance is disposed
+            /// </remarks>
+            public bool CleanupOnExit { get; set; } = false;
 
             internal readonly TypeDictionary<string> TypeKeyProperties;
             internal readonly TypeDictionary<string> TypeFolderNames;
         }
 
-        public readonly LocalDataStore.ConfigurationModel Config = new ConfigurationModel();
+        public readonly ConfigurationModel Config = new ConfigurationModel();
 
         public LocalDataStore(string dataStoreName)
         {
             Config.DataStoreName = dataStoreName;
         }
-
-        private string DataPath<T>()
+       
+        public virtual string DataPath<T>()
         {
             return Path.Combine(
-                Config.DataRootPath,
+                Config.DataStoreRootPath,
                 Config.DataStoreName,
                 (Config.TypeFolderNames.SafeGet<T>() ?? typeof(T).Name)
             );
         }
 
-        private void VerifyDataPathExists(string path)
+        public virtual string GetFileName<T>(T item)
+        {
+            var id = GetKeyProperty(item);
+            return Path.Combine(DataPath<T>(), string.Format("{0}{1}", id, Config.RecordFileExtension));
+        }
+
+        private void VerifyPathExists(string path)
         {
             if (!Directory.Exists(path)) Directory.CreateDirectory(path);
         }
@@ -63,16 +76,10 @@ namespace SimpleDataStore
             return item.GetType().GetProperty(key).GetValue(item, null).ToString();
         }
 
-        private string GetFileName<T>(T item)
-        {
-            var id = GetKeyProperty(item);
-            return Path.Combine(DataPath<T>(), string.Format("{0}{1}", id, Config.RecordFileExtension));
-        }
-
         public IEnumerable<T> GetAll<T>()
         {
             var path = DataPath<T>();
-            VerifyDataPathExists(path);
+            VerifyPathExists(path);
 
             var files = Directory.GetFiles(path).Where(x => x.EndsWith(Config.RecordFileExtension));
             return files
@@ -83,7 +90,7 @@ namespace SimpleDataStore
         public T Get<T>(object id)
         {
             var path = DataPath<T>();
-            VerifyDataPathExists(path);
+            VerifyPathExists(path);
 
             var file = Directory.GetFiles(path)
                 .SingleOrDefault(x => Path.GetFileName(x) == string.Format("{0}{1}", id, Config.RecordFileExtension));
@@ -96,8 +103,8 @@ namespace SimpleDataStore
         public void Save<T>(T item)
         {
             var path = DataPath<T>();
-            VerifyDataPathExists(path);
-            
+            VerifyPathExists(path);
+
             var serialisedItem = item.ToJson();
             var fileName = GetFileName(item);
 
@@ -107,24 +114,57 @@ namespace SimpleDataStore
         public void Delete<T>(object key)
         {
             var path = DataPath<T>();
-            VerifyDataPathExists(path);
+            VerifyPathExists(path);
 
             File.Delete(path);
         }
 
         public void Configure<T>(string folderName, string keyPropertyName)
         {
-            if(folderName != null)
+            if (folderName != null)
                 Config.TypeFolderNames[typeof(T)] = folderName;
 
-            if(keyPropertyName != null) 
+            if (keyPropertyName != null)
                 Config.TypeKeyProperties[typeof(T)] = keyPropertyName;
+        }
+
+        private void DeleteResource(string path, bool throwOnError = false)
+        {
+            if (!Directory.Exists(path))
+            {
+                Debug.WriteLine("Nothing to delete");
+                return;
+            }
+
+            try
+            {
+                Directory.Delete(path, true);
+            }
+            catch (IOException ex)
+            {
+                Debug.WriteLine("Delete failed{0}Reason: {1}", Environment.NewLine, ex.Message);
+                if(throwOnError) throw;
+            }
+        }
+
+        public void DeleteFolder<T>()
+        {
+            DeleteResource(DataPath<T>(), true);
+        }
+
+        public void DeleteDataStore()
+        {
+            DeleteResource(Config.DataStoreRootPath, true);
         }
 
         // TODO
         // something like this might be nice, will see...
         //public void Configure<T>(string folderName, Func<T, object> key)
         // usage: db.Configure<InternalStaff>("people", p=> string.Format($"{p.FirstName}_{p.SecondName}")
-        
+
+        public void Dispose()
+        {
+            if (Config.CleanupOnExit) DeleteDataStore();
+        }
     }
 }

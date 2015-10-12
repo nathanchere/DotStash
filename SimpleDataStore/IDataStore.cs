@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SimpleDataStore
 {
-    public interface IDataStore
+    public interface IDataStore : IDisposable
     {
         IEnumerable<T> GetAll<T>();
         T Get<T>(object key);
