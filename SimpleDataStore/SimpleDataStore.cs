@@ -53,9 +53,8 @@ namespace DotStash
         public virtual string DataPath<T>()
         {
             return Path.Combine(
-                Config.DataStoreRootPath,
-                Config.DataStoreName,
-                (Config.TypeFolderNames.SafeGet<T>() ?? typeof(T).Name)
+                Path.Combine(Config.DataStoreRootPath,Config.DataStoreName),
+                Config.TypeFolderNames.SafeGet<T>() ?? typeof(T).Name
             );
         }
 
@@ -141,7 +140,7 @@ namespace DotStash
             }
             catch (IOException ex)
             {
-                Debug.WriteLine("Delete failed{0}Reason: {1}", Environment.NewLine, ex.Message);
+                Debug.WriteLine(string.Format("Delete failed{0}Reason: {1}", Environment.NewLine, ex.Message));
                 if(throwOnError) throw;
             }
         }

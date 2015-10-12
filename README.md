@@ -16,6 +16,16 @@ Why bother? The main itches driving this project were wanting:
   * rapid prototyping (edit documents in any text editor); and
   * easily read and verify results in automated tests
 
+Minimum Requirements / Dependencies
+----------
+
+* .Net Framework 3.5 Client Profile
+* NServiceKit.Text
+
+Works on Mono for Linux, untested in other non-Windows environments.
+
+It does use some C#6 features so assumes Visual Studio 2015 or equivalent if intending to edit or build from source.
+
 Limitations
 ----------
 
