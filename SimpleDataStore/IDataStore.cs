@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace SimpleDataStore
 {
-    public interface IDataStore : IDisposable
+    public interface IDataStore
     {
-        IEnumerable<T> GetAll<T>(string key);
-        T Get<T>(object id);
+        IEnumerable<T> GetAll<T>();
+        T Get<T>(object key);
         void Save<T>(T item);
-        void Delete(object id);
+        void Delete<T>(object key);
         
         void Configure<T>(string folderName, Func<T, object> key);
 
