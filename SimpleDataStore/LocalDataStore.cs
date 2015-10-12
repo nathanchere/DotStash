@@ -119,13 +119,13 @@ namespace SimpleDataStore
             File.Delete(path);
         }
 
-        public void Configure<T>(string folderName, string keyPropertyName)
+        public void Configure<T>(string folderName = null, string keyName = null)
         {
             if (folderName != null)
                 Config.TypeFolderNames[typeof(T)] = folderName;
 
-            if (keyPropertyName != null)
-                Config.TypeKeyProperties[typeof(T)] = keyPropertyName;
+            if (keyName != null)
+                Config.TypeKeyProperties[typeof(T)] = keyName;
         }
 
         private void DeleteResource(string path, bool throwOnError = false)

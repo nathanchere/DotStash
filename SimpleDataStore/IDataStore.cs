@@ -10,7 +10,7 @@ namespace SimpleDataStore
         void Save<T>(T item);
         void Delete<T>(object key);
         
-        void Configure<T>(string folderName, string keyPropertyName);
+        void Configure<T>(string folderName, string keyName);
 
         //// Maybe todo:
         //void BackupData(string fileName);
